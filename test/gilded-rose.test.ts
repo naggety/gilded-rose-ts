@@ -69,4 +69,15 @@ describe("Aged Brie", function () {
     [brieItem] = gildedRose.updateQuality();
     expect(brieItem.quality).toEqual(7);
   });
+
+  it("Quality never increments over 50", function () {
+    let brieItems = [
+      new Item("Aged Brie", 5, 50),
+      new Item("Aged Brie", -2, 49)
+    ];
+    const gildedRose = new GildedRose(brieItems);
+    brieItems = gildedRose.updateQuality();
+    expect(brieItems[0].quality).toEqual(50);
+    expect(brieItems[1].quality).toEqual(50);
+  });
 });
