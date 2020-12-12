@@ -28,4 +28,15 @@ describe("Normal item", function () {
     [normalItem] = gildedRose.updateQuality();
     expect(normalItem.quality).toEqual(3);
   });
+
+  it("Quality never decrements below 0", function () {
+    let normalItems = [
+      new Item("Elixir of the Mongoose", 5, 0),
+      new Item("Elixir of the Mongoose", 0, 1)
+    ];
+    const gildedRose = new GildedRose(normalItems);
+    normalItems = gildedRose.updateQuality();
+    expect(normalItems[0].quality).toEqual(0);
+    expect(normalItems[1].quality).toEqual(0);
+  });
 });
