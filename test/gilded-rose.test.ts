@@ -89,3 +89,21 @@ describe("Aged Brie", function () {
     expect(brieItems[1].quality).toEqual(50);
   });
 });
+
+describe("Legendary item", function () {
+  it("Never changes its sellIn nor quality", function () {
+    let legendaryItems = [
+      new Item("Sulfuras, Hand of Ragnaros", 10, 80),
+      new Item("Sulfuras, Hand of Ragnaros", 0, 80),
+      new Item("Sulfuras, Hand of Ragnaros", -5, 80)
+    ];
+    const gildedRose = new GildedRose(legendaryItems);
+    legendaryItems = gildedRose.updateQuality();
+    expect(legendaryItems[0].sellIn).toEqual(10);
+    expect(legendaryItems[0].quality).toEqual(80);
+    expect(legendaryItems[1].sellIn).toEqual(0);
+    expect(legendaryItems[1].quality).toEqual(80);
+    expect(legendaryItems[2].sellIn).toEqual(-5);
+    expect(legendaryItems[2].quality).toEqual(80);
+  });
+});
