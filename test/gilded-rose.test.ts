@@ -107,3 +107,12 @@ describe("Legendary item", function () {
     expect(legendaryItems[2].quality).toEqual(80);
   });
 });
+
+describe("Backstage ticket", function () {
+  it("SellIn must decremented by one when calling updateQuality", function () {
+    let backstageItem = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 5);
+    const gildedRose = new GildedRose([backstageItem]);
+    [backstageItem] = gildedRose.updateQuality();
+    expect(backstageItem.sellIn).toEqual(9);
+  });
+});
