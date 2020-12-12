@@ -1,4 +1,5 @@
-import { Item, GildedRose } from "../app/gilded-rose";
+import { Item } from '../app/Item'
+import { GildedRose } from '../app/GildedRose';
 
 describe("Item's sellIn", function() {
   it("Non-legendary items must decrement theirs sellIn when calling updateQuality", function () {
