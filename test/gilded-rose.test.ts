@@ -23,10 +23,14 @@ describe("Normal item", function () {
   });
 
   it("Must decrement its quality in 2 after sellIn date", function () {
-    let normalItem = new Item("Elixir of the Mongoose", 0, 5);
-    const gildedRose = new GildedRose([normalItem]);
-    [normalItem] = gildedRose.updateQuality();
-    expect(normalItem.quality).toEqual(3);
+    let normalItems = [
+      new Item("Elixir of the Mongoose", 0, 5),
+      new Item("Elixir of the Mongoose", -2, 5)
+    ];
+    const gildedRose = new GildedRose(normalItems);
+    normalItems = gildedRose.updateQuality();
+    expect(normalItems[0].quality).toEqual(3);
+    expect(normalItems[1].quality).toEqual(3);
   });
 
   it("Quality never decrements below 0", function () {
@@ -64,10 +68,14 @@ describe("Aged Brie", function () {
   });
 
   it("Must increment its quality in 2 after sellIn date", function () {
-    let brieItem = new Item("Aged Brie", 0, 5);
-    const gildedRose = new GildedRose([brieItem]);
-    [brieItem] = gildedRose.updateQuality();
-    expect(brieItem.quality).toEqual(7);
+    let brieItems = [
+      new Item("Aged Brie", 0, 5),
+      new Item("Aged Brie", -2, 5)
+    ];
+    const gildedRose = new GildedRose(brieItems);
+    brieItems = gildedRose.updateQuality();
+    expect(brieItems[0].quality).toEqual(7);
+    expect(brieItems[1].quality).toEqual(7);
   });
 
   it("Quality never increments over 50", function () {
