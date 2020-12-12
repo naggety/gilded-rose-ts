@@ -115,4 +115,11 @@ describe("Backstage ticket", function () {
     [backstageItem] = gildedRose.updateQuality();
     expect(backstageItem.sellIn).toEqual(9);
   });
+
+  it("Must increment by 1 its quality if rests more than 10 days for sellIn", function () {
+    let backstageItem = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 5);
+    const gildedRose = new GildedRose([backstageItem]);
+    [backstageItem] = gildedRose.updateQuality();
+    expect(backstageItem.quality).toEqual(6);
+  });
 });
