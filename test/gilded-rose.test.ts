@@ -148,6 +148,17 @@ describe("Backstage ticket", function () {
     expect(backstageItems[1].quality).toEqual(8);
   });
 
+  it("Quality never increments over 50", function () {
+    let backstageItems = [
+      new Item("Backstage passes to a TAFKAL80ETC concert", 15, 50),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 6, 49)
+    ];
+    const gildedRose = new GildedRose(backstageItems);
+    backstageItems = gildedRose.updateQuality();
+    expect(backstageItems[0].quality).toEqual(50);
+    expect(backstageItems[1].quality).toEqual(50);
+  });
+
   it("Before sellIn, quality will be 0", function () {
     let backstageItems = [
       new Item("Backstage passes to a TAFKAL80ETC concert", 0, 5),
