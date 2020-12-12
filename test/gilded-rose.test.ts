@@ -11,6 +11,17 @@ describe("Item's sellIn", function() {
     expect(brieItem.sellIn).toEqual(9);
     expect(backstageItem.sellIn).toEqual(9);
   });
+
+  it("Non-legendary items must decrement theirs sellIn below 0", function () {
+    let normalItem    = new Item("Elixir of the Mongoose", 0, 5);
+    let brieItem      = new Item("Aged Brie", 0, 5);
+    let backstageItem = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 5);
+    const gildedRose  = new GildedRose([normalItem, brieItem, backstageItem]);
+    [normalItem, brieItem, backstageItem] = gildedRose.updateQuality();
+    expect(normalItem.sellIn).toEqual(-1);
+    expect(brieItem.sellIn).toEqual(-1);
+    expect(backstageItem.sellIn).toEqual(-1);
+  });
 });
 
 describe("Normal item", function () {
