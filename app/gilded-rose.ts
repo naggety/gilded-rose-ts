@@ -24,7 +24,7 @@ export class GildedRose {
         for (let i = 0; i < this.items.length; i++) {
             let item = this.items[i];
 
-            if (item.name === 'Sulfuras, Hand of Ragnaros')
+            if (isLegendary(item))
                 continue;
 
             item.sellIn--
@@ -63,6 +63,10 @@ function isAgedBrie(item: Item): boolean {
 
 function isBackstagePasses(item: Item): boolean {
     return item.name === 'Backstage passes to a TAFKAL80ETC concert'
+}
+
+function isLegendary(item: Item): boolean {
+    return item.name === 'Sulfuras, Hand of Ragnaros'
 }
 
 function correctOutOfLimitsQuality(quality: number, min: number = MIN_QUALITY, max: number = MAX_QUALITY) {
