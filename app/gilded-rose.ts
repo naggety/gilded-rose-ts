@@ -12,6 +12,9 @@ export class Item {
 
 const MAX_QUALITY = 50
 const MIN_QUALITY = 0
+enum ItemType {
+    NORMAL, AGED_BRIE, LEGENDARY, BACKSTAGE_PASS
+}
 
 export class GildedRose {
     items: Array<Item>;
@@ -23,25 +26,29 @@ export class GildedRose {
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
             let item = this.items[i];
+            const itemType = getItemType(item);
 
-            if (isLegendary(item))
+            if (itemType === ItemType.LEGENDARY)
                 continue;
 
             item.sellIn--
 
-            if (isNormalItem(item)) {
-                item.quality -= item.sellIn >= 0 ? 1 : 2;
-            }
-            else if (isAgedBrie(item)) {
-                item.quality += item.sellIn >= 0 ? 1 : 2;
-            } else if (isBackstagePasses(item)) {
-                if      (item.sellIn >= 10) item.quality += 1;
-                else if (item.sellIn >= 5)  item.quality += 2;
-                else if (item.sellIn >= 0)  item.quality += 3;
-                else                        item.quality = 0;
-            }
-            else {
-                console.error("Unknown type for Item: " + item.name);
+            switch (itemType) {
+                case ItemType.NORMAL:
+                    item.quality -= item.sellIn >= 0 ? 1 : 2;
+                    break;
+                case ItemType.AGED_BRIE:
+                    item.quality += item.sellIn >= 0 ? 1 : 2;
+                    break;
+                case ItemType.BACKSTAGE_PASS:
+                    if      (item.sellIn >= 10) item.quality += 1;
+                    else if (item.sellIn >= 5)  item.quality += 2;
+                    else if (item.sellIn >= 0)  item.quality += 3;
+                    else                        item.quality = 0;
+                    break;
+                default:
+                    console.error("Unknown type for Item: " + item.name);
+                    break;
             }
 
             item.quality = correctOutOfLimitsQuality(item.quality);
@@ -51,10 +58,15 @@ export class GildedRose {
     }
 }
 
-function isNormalItem (item: Item): boolean {
-    return item.name !== 'Aged Brie'
-            && item.name !== 'Backstage passes to a TAFKAL80ETC concert'
-            && item.name !== 'Sulfuras, Hand of Ragnaros';
+function getItemType (item: Item): ItemType {
+    if (isAgedBrie(item))
+        return ItemType.AGED_BRIE;
+    else if (isBackstagePasses(item))
+        return ItemType.BACKSTAGE_PASS;
+    else if (isLegendary(item))
+        return ItemType.LEGENDARY;
+    else
+        return ItemType.NORMAL;
 }
 
 function isAgedBrie(item: Item): boolean {
