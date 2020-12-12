@@ -55,4 +55,11 @@ describe("Aged Brie", function () {
     [brieItem] = gildedRose.updateQuality();
     expect(brieItem.quality).toEqual(6);
   });
+
+  it("Quality must be decremented only one when sellIn updates from 1 to 0", function () {
+    let brieItem = new Item("Aged Brie", 1, 5);
+    const gildedRose = new GildedRose([brieItem]);
+    [brieItem] = gildedRose.updateQuality();
+    expect(brieItem.quality).toEqual(6);
+  });
 });
