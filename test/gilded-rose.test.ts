@@ -40,3 +40,13 @@ describe("Normal item", function () {
     expect(normalItems[1].quality).toEqual(0);
   });
 });
+
+describe("Aged Brie", function () {
+  it("SellIn must decremented by one when calling updateQuality", function () {
+    let brieItem = new Item("Aged Brie", 10, 5);
+    const gildedRose = new GildedRose([brieItem]);
+    [brieItem] = gildedRose.updateQuality();
+    expect(brieItem.sellIn).toEqual(9);
+  });
+
+});
