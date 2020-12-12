@@ -24,8 +24,7 @@ export class GildedRose {
     }
 
     updateQuality() {
-        for (let i = 0; i < this.items.length; i++) {
-            let item = this.items[i];
+        for (let item of this.items) {
             const itemType = getItemType(item);
 
             if (itemType === ItemType.LEGENDARY)
