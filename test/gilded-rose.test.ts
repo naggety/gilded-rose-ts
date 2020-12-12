@@ -1,13 +1,19 @@
 import { Item, GildedRose } from "../app/gilded-rose";
 
-describe("Normal item", function () {
-  it("SellIn must decremented by one when calling updateQuality", function () {
-    let normalItem = new Item("Elixir of the Mongoose", 10, 5);
-    const gildedRose = new GildedRose([normalItem]);
-    [normalItem] = gildedRose.updateQuality();
+describe("Item's sellIn", function() {
+  it("Non-legendary items must decrement theirs sellIn when calling updateQuality", function () {
+    let normalItem    = new Item("Elixir of the Mongoose", 10, 5);
+    let brieItem      = new Item("Aged Brie", 10, 5);
+    let backstageItem = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 5);
+    const gildedRose  = new GildedRose([normalItem, brieItem, backstageItem]);
+    [normalItem, brieItem, backstageItem] = gildedRose.updateQuality();
     expect(normalItem.sellIn).toEqual(9);
+    expect(brieItem.sellIn).toEqual(9);
+    expect(backstageItem.sellIn).toEqual(9);
   });
+});
 
+describe("Normal item", function () {
   it("Must decrement its quality before sellIn date", function () {
     let normalItem = new Item("Elixir of the Mongoose", 10, 5);
     const gildedRose = new GildedRose([normalItem]);
@@ -46,13 +52,6 @@ describe("Normal item", function () {
 });
 
 describe("Aged Brie", function () {
-  it("SellIn must decremented by one when calling updateQuality", function () {
-    let brieItem = new Item("Aged Brie", 10, 5);
-    const gildedRose = new GildedRose([brieItem]);
-    [brieItem] = gildedRose.updateQuality();
-    expect(brieItem.sellIn).toEqual(9);
-  });
-
   it("Must increment by 1 its quality before sellIn date", function () {
     let brieItem = new Item("Aged Brie", 10, 5);
     const gildedRose = new GildedRose([brieItem]);
@@ -109,13 +108,6 @@ describe("Legendary item", function () {
 });
 
 describe("Backstage ticket", function () {
-  it("SellIn must decremented by one when calling updateQuality", function () {
-    let backstageItem = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 5);
-    const gildedRose = new GildedRose([backstageItem]);
-    [backstageItem] = gildedRose.updateQuality();
-    expect(backstageItem.sellIn).toEqual(9);
-  });
-
   it("Must increment by 1 its quality if rests more than 10 days for sellIn", function () {
     let backstageItem = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 5);
     const gildedRose = new GildedRose([backstageItem]);
