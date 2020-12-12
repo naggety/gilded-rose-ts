@@ -25,34 +25,29 @@ export class GildedRose {
 
     updateQuality() {
         for (let item of this.items) {
-            const itemType = getItemType(item);
-
-            if (itemType === ItemType.LEGENDARY)
-                continue;
-
-            item.sellIn--
-
-            switch (itemType) {
+            switch (getItemType(item)) {
                 case ItemType.NORMAL:
+                    item.sellIn--
                     item.quality -= item.sellIn >= 0 ? 1 : 2;
+                    item.quality = correctOutOfLimitsQuality(item.quality);
                     break;
                 case ItemType.AGED_BRIE:
+                    item.sellIn--
                     item.quality += item.sellIn >= 0 ? 1 : 2;
+                    item.quality = correctOutOfLimitsQuality(item.quality);
                     break;
                 case ItemType.BACKSTAGE_PASS:
+                    item.sellIn--
                     if      (item.sellIn >= 10) item.quality += 1;
                     else if (item.sellIn >= 5)  item.quality += 2;
                     else if (item.sellIn >= 0)  item.quality += 3;
                     else                        item.quality = 0;
+                    item.quality = correctOutOfLimitsQuality(item.quality);
                     break;
-                default:
-                    console.error("Unknown type for Item: " + item.name);
+                case ItemType.LEGENDARY:
                     break;
             }
-
-            item.quality = correctOutOfLimitsQuality(item.quality);
         }
-
         return this.items;
     }
 }
